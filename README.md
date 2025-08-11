@@ -21,7 +21,7 @@
 
 ### 1. 硬件连接
 
-- LCD1602 的 D4~D7 分别连接到 MCU 的 GPIO4~GPIO7（4 位模式）
+- LCD1602 的 D4-D7 分别连接到 MCU 的 GPIO4-GPIO7（4 位模式）
 - 其余功能引脚（V0, RS, RW, E, BLA, BLK）按需连接
 - 电源引脚连接好
 
