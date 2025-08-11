@@ -1,4 +1,4 @@
-# MicroPython LCD1602 直连控制库
+# LCD1602 MicroPython 直连控制库
 
 本项目为 MicroPython 下的 LCD1602 (HD44780) 直连控制库，支持 4 位/8 位数据模式、灵活引脚映射、PWM 对比度/背光调节、文本浏览与滚动等高级功能。
 
