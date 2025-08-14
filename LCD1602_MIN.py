@@ -507,6 +507,14 @@ class LCD1602:
     def browser_set_print_speed(self, print_speed=3):
         self.browser["print_speed"] = print_speed
         return True
+    def browser_open(self):
+        if self.browser["content_length"] == 0:
+            self.print("Browser is Empty", 0.33)
+            return False
+        else:
+            self.browser_set_line_pointer(0)
+            self.browser_print_2lines()
+            return True
     def browser_clear(self):
         self.browser["content"] = ""
         self.browser["content_length"] = 0

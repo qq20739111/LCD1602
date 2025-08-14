@@ -1337,6 +1337,20 @@ class LCD1602:
         self.browser["print_speed"] = print_speed
         return True
 
+    # 打开Browser内容，并从第1行开始显示
+    def browser_open(self):
+        """
+        打开Browser内容，并从第1行开始显示
+        Open the browser content and display from the first line.
+        """
+        if self.browser["content_length"] == 0:
+            self.print("Browser is Empty", 0.33)
+            return False
+        else:
+            self.browser_set_line_pointer(0)
+            self.browser_print_2lines()
+            return True
+
     # 清空Browser内容
     def browser_clear(self):
         """
