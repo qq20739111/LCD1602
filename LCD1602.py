@@ -17,7 +17,7 @@ class LCD1602:
         :param name: 实例名称，默认为 'lcd1620'
         """
         # 类版本号
-        self.version = "1.0.0"
+        self.version = "1.0.1"
         # 实例名称
         self.name = name
 
@@ -460,6 +460,35 @@ class LCD1602:
         else:
             return False
 
+    # 添加MCU的GPIO引脚到可用引脚列表
+    def add_mcu_gpio_pin(self, pin_name):
+        """
+        添加MCU的GPIO引脚到可用引脚列表
+        Add an MCU GPIO pin to the available pin list.
+        :param pin_name: 要添加的MCU GPIO引脚名称
+        The name of the MCU GPIO pin to add.
+        """
+        # pin_name必须是0或正整数，否则抛出异常
+        if not isinstance(pin_name, int) or pin_name < 0 or pin_name > 1024:
+            raise ValueError("Invalid pin name. Pin name must be a positive integer(0-1024).")
+        if pin_name not in self.mcu_gpio_pin_range:
+            self.mcu_gpio_pin_range.append(pin_name)
+        return True
+
+    # 删除MCU的GPIO引脚从可用引脚列表
+    def remove_mcu_gpio_pin(self, pin_name):
+        """
+        删除MCU的GPIO引脚从可用引脚列表
+        Remove an MCU GPIO pin from the available pin list.
+        :param pin_name: 要删除的MCU GPIO引脚名称
+        The name of the MCU GPIO pin to remove.
+        """
+        if pin_name in self.mcu_gpio_pin_range:
+            self.mcu_gpio_pin_range.remove(pin_name)
+            return True
+        else:
+            return False
+
     # ########################################
     # 以下是获取并返回引脚信息以便程序处理的方法
     #
@@ -534,7 +563,7 @@ class LCD1602:
         :return: 包含已启用的MCU GPIO引脚名称的列表
         A list containing enabled MCU GPIO pin names.
         """
-        return self.mcu_gpio_pin_range
+        return self.mcu_gpio_pin_range.copy()
 
     # 获取已启用LCD引脚对应的 Pin 对象
     def get_bind_mcu_pins(self):

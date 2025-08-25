@@ -2,7 +2,7 @@ from machine import Pin, PWM
 import time
 class LCD1602:
     def __init__(self, name = 'lcd1620'):
-        self.version = "1.0.0"
+        self.version = "1.0.1"
         self.name = name
         self.__default_pins__ = ["VSS", "VDD", 
                              "V0", "RS", "RW", "E", 
@@ -195,6 +195,18 @@ class LCD1602:
             return True
         else:
             return False
+    def add_mcu_gpio_pin(self, pin_name):
+        if not isinstance(pin_name, int) or pin_name < 0 or pin_name > 1024:
+            raise ValueError("Invalid pin name. Pin name must be a positive integer(0-1024).")
+        if pin_name not in self.mcu_gpio_pin_range:
+            self.mcu_gpio_pin_range.append(pin_name)
+        return True
+    def remove_mcu_gpio_pin(self, pin_name):
+        if pin_name in self.mcu_gpio_pin_range:
+            self.mcu_gpio_pin_range.remove(pin_name)
+            return True
+        else:
+            return False
     def get_enabled_pins(self):
         return self.enabled_pins.copy()
     def get_enabled_pins_list(self):
@@ -210,7 +222,7 @@ class LCD1602:
     def get_enabled_data_pins_list(self):
         return [pin for pin in self.__default_data_pins__ if pin in self.enabled_pins]
     def get_mcu_gpio_pins_list(self):
-        return self.mcu_gpio_pin_range
+        return self.mcu_gpio_pin_range.copy()
     def get_bind_mcu_pins(self):
         return self.bind_mcu_pins.copy()
     def get_bind_mcu_pins_list(self):
