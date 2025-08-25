@@ -17,7 +17,7 @@ class LCD1602:
         :param name: 实例名称，默认为 'lcd1620'
         """
         # 类版本号
-        self.version = "1.0.1"
+        self.version = "1.0.2"
         # 实例名称
         self.name = name
 
@@ -1336,6 +1336,20 @@ class LCD1602:
         """
         self.browser["print_speed"] = print_speed
         return True
+
+    # 打开Browser内容，并从第1行开始显示
+    def browser_open(self):
+        """
+        打开Browser内容，并从第1行开始显示
+        Open the browser content and display from the first line.
+        """
+        if self.browser["content_length"] == 0:
+            self.print("Browser is Empty", 0.33)
+            return False
+        else:
+            self.browser_set_line_pointer(0)
+            self.browser_print_2lines()
+            return True
 
     # 清空Browser内容
     def browser_clear(self):
